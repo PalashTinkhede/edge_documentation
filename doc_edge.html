@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZEUS Edge Platform – Technical Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg-main: #0d1117;
+            --bg-sidebar: #161b22;
+            --border-color: #30363d;
+            --text-main: #c9d1d9;
+            --text-bright: #f0f6fc;
+            --accent-blue: #58a6ff;
+            --accent-light-blue: #79c0ff;
+            --accent-red: #ff7b72;
+            --accent-yellow: #d29922;
+            --sidebar-width: 260px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            display: flex;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+        }
+
+        /* Sidebar Navigation */
+        nav {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            position: fixed;
+            padding: 30px 20px;
+            overflow-y: auto;
+        }
+
+        nav h2 {
+            font-size: 0.9rem;
+            color: #8b949e;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            display: block;
+            padding: 6px 10px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        nav ul li a:hover {
+            background-color: #21262d;
+            color: var(--accent-blue);
+        }
+
+        /* Main Content Area */
+        main {
+            margin-left: var(--sidebar-width);
+            padding: 40px 60px;
+            width: calc(100% - var(--sidebar-width));
+            max-width: 1200px;
+        }
+
+        h1, h2, h3, h4 {
+            color: var(--accent-blue);
+            margin-top: 24px;
+        }
+
+        h1 {
+            font-size: 2.2em;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.7em;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
+            margin-top: 50px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            color: var(--accent-light-blue);
+        }
+
+        p {
+            margin: 16px 0;
+        }
+
+        pre {
+            background: #161b22;
+            padding: 15px;
+            overflow-x: auto;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 6px;
+            color: #e6edf3;
+            font-size: 0.9rem;
+        }
+
+        code {
+            font-family: "JetBrains Mono", "Consolas", monospace;
+            font-size: 0.9em;
+            color: var(--accent-red);
+            background: #21262d;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        pre code {
+            color: #e6edf3;
+            background: none;
+            padding: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #161b22;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #21262d;
+            color: var(--text-bright);
+            font-weight: 600;
+        }
+
+        .note {
+            background: #262110;
+            border-left: 4px solid var(--accent-yellow);
+            padding: 15px;
+            margin: 20px 0;
+            color: #e3b341;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .warning {
+            background: #2d1616;
+            border-left: 4px solid #f85149;
+            padding: 15px;
+            margin: 20px 0;
+            color: #ff7b72;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: #8b949e;
+            text-align: center;
+        }
+
+        strong {
+            color: var(--text-bright);
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 900px) {
+            nav { width: 200px; }
+            main { margin-left: 200px; padding: 30px; }
+        }
+
+        @media (max-width: 600px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid var(--border-color); }
+            main { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Documentation</h2>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#structure">Repository Structure</a></li>
+            <li><a href="#install-script">1. Installation Script</a></li>
+            <li><a href="#clusterlabs">2. ClusterLabs</a></li>
+            <li><a href="#performa">3. Performa Package</a></li>
+            <li><a href="#wetty">4. WeTTY Package</a></li>
+            <li><a href="#virtualization">5. Wok & Kimchi</a></li>
+            <li><a href="#hardware">Hardware Matrix</a></li>
+            <li><a href="#maintenance">Maintenance</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="overview">
+            <h1>ZEUS Edge Platform Documentation</h1>
+            <p>
+                The <strong>ZEUS repository</strong> is a comprehensive edge computing infrastructure deployment toolkit designed specifically for <strong>Ubuntu 24.04 LTS</strong> systems. It serves as an automated installer and configuration system for creating a full-featured edge computing platform with monitoring, remote access, virtualization, and clustering capabilities.
+            </p>
+
+            
+
+[Image of edge computing architecture diagram]
+
+        </section>
+
+        <section id="structure">
+            <h2>Repository Structure</h2>
+            <p>The repository is organized into specific packages managed by a central installation orchestrator:</p>
+<pre><code>ZEUS/
+├── install.sh                  # Main orchestrator
+├── install_clusterlabs.sh       # HA/Clustering logic
+├── performa_package/           # Monitoring component
+│   ├── package.json
+│   ├── config.json
+│   ├── index.js
+│   ├── install_performa.sh
+│   └── uninstall.sh
+├── wetty_package/               # Web Terminal component
+│   └── install_wetty.sh
+└── wok_package/                 # Virtualization component
+    └── install_wok.sh</code></pre>
+        </section>
+
+        <section id="install-script">
+            <h2>1. Main Installation Script (install.sh)</h2>
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Root Privilege Enforcement:</strong> Ensures administrative access before execution.</li>
+                <li><strong>Colorized Logging:</strong> Visual status updates for better readability.</li>
+                <li><strong>Sequential Installation:</strong> Controlled rollout of components.</li>
+                <li><strong>Forced System Reboot:</strong> Ensures all kernel modules and services initialize correctly.</li>
+            </ul>
+
+            <h3>Installation Sequence</h3>
+            <ol>
+                <li><strong>Performa:</strong> Monitoring Solution</li>
+                <li><strong>WeTTY:</strong> Remote Access Solution</li>
+                <li><strong>Wok:</strong> Virtualization Solution</li>
+                <li><strong>ClusterLabs:</strong> Cluster Management Solution</li>
+            </ol>
+        </section>
+
+        <section id="clusterlabs">
+            <h2>2. ClusterLabs Installation <a href="https://clusterlabs.org/projects/pacemaker/doc/3.0/">(Doc)</a></h2><br>
+	
+		<p><b>ClusterLabs</b> is an open-source community that develops and maintains high-availability clustering software for Linux systems. It provides core components such as Pacemaker and Corosync to manage clustered resources, monitor node health, coordinate failover, and ensure uninterrupted service availability across distributed infrastructure environments.</p>
+
+<h3>Purpose</h3>
+<ul>
+    <li>Node preparation for cluster membership</li>
+    <li>Installation of Pacemaker, Corosync, and PCS</li>
+    <li>Cluster service configuration</li>
+</ul>
+
+<h3>Key Operations</h3>
+<ol>
+    <li>System updates</li>
+    <li>Time synchronization (chrony)</li>
+    <li>Pacemaker stack installation</li>
+    <li>PCSD daemon enablement</li>
+    <li>Service state enforcement</li>
+    <li>hacluster authentication setup</li>
+</ol>
+            <p>Installs the Pacemaker/Corosync stack to prepare nodes for High-Availability clustering.</p>
+	
+            <h3>Core Cluster Stack (Mandatory)</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package</th>
+        <th>Minimum Version</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>pacemaker</code></td>
+        <td>&ge; 2.1.6</td>
+        <td>High-availability resource manager</td>
+      </tr>
+      <tr>
+        <td><code>corosync</code></td>
+        <td>&ge; 3.1.7</td>
+        <td>Cluster messaging and quorum service</td>
+      </tr>
+      <tr>
+        <td><code>pcs</code></td>
+        <td>&ge; 0.11.8</td>
+        <td>Pacemaker Configuration System CLI</td>
+      </tr>
+      <tr>
+        <td><code>pcsd</code></td>
+        <td>&ge; 0.11.8</td>
+        <td>PCS daemon (installed with pcs)</td>
+      </tr>
+      <tr>
+        <td><code>fence-agents</code></td>
+        <td>&ge; 4.14.0</td>
+        <td>STONITH and fencing providers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Time Synchronization (Mandatory)</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>chrony</code></td>
+        <td>&ge; 4.5</td>
+        <td>Cluster-wide clock synchronization</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    <strong>Note:</strong> <code>ntpd</code> is not supported and must not be used.
+  </p>
+
+  <h3>Authentication &amp; System Dependencies</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Version</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>systemd</code></td>
+        <td>&ge; 255</td>
+        <td>Service lifecycle management</td>
+      </tr>
+      <tr>
+        <td><code>libpam-runtime</code></td>
+        <td>OS-provided</td>
+        <td>Authentication backend</td>
+      </tr>
+      <tr>
+        <td><code>passwd / shadow</code></td>
+        <td>OS-provided</td>
+        <td>User and password management</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Networking Dependencies</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>iproute2</code></td>
+        <td>&ge; 6.x</td>
+        <td>Network interface management</td>
+      </tr>
+      <tr>
+        <td><code>libnss-resolve</code></td>
+        <td>OS-provided</td>
+        <td>Name resolution consistency</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Required Users &amp; Paths</h3>
+  <ul>
+    <li><strong>User:</strong> <code>hacluster</code></li>
+    <li><strong>Home Directory:</strong> <code>/var/lib/pcsd</code></li>
+    <li><strong>Configuration Paths:</strong>
+      <ul>
+        <li><code>/etc/pacemaker/</code></li>
+        <li><code>/etc/corosync/</code></li>
+        <li><code>/etc/pcs/</code></li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Expected Service State (Post-Installation)</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Expected State</th>
+        <th>Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>pcsd</code></td>
+        <td>RUNNING</td>
+        <td>Required for authentication and cluster join</td>
+      </tr>
+      <tr>
+        <td><code>pacemaker</code></td>
+        <td>STOPPED</td>
+        <td>Starts only after cluster creation</td>
+      </tr>
+      <tr>
+        <td><code>corosync</code></td>
+        <td>STOPPED</td>
+        <td>Starts only after cluster creation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Minimum Installation Command</h3>
+  <pre><code>
+sudo apt install -y \
+  pacemaker \
+  corosync \
+  pcs \
+  fence-agents \
+  chrony
+  </code></pre>
+
+  <h3>Explicitly Not Required</h3>
+  <ul>
+    <li>Node.js</li>
+    <li>Python (beyond base OS)</li>
+    <li>Docker or Kubernetes</li>
+    <li>Hardware virtualization</li>
+    <li>Web UI components</li>
+  </ul>
+
+  <h3>Operational Notes</h3>
+  <ul>
+    <li>All cluster nodes must run identical major versions</li>
+    <li>Time drift greater than 1 second may break quorum</li>
+    <li>Fencing must be installed even if not immediately configured</li>
+  </ul>
+</section>
+
+        <section id="performa">
+            <h2>3. Performa Package <a href="https://github.com/jhuckaby/performa/blob/master/README.md">(Doc)</a></h2>
+            <p>A Performa is a multi-server monitoring system with a web based front-end UI. It can monitor CPU, memory, disk, network, and of course your own custom metrics. Alerts can be configured to trigger on any expression, and send e-mails or fire web hooks. Timeline data can be stored on local disk or in Amazon S3.</p>
+            
+            <div class="note">
+                <strong>Architecture Note:</strong> ARM is not supported for Performa. The binary is linux-x64 only.
+            </div>
+<h3>Hardware Requirements</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Requirement</th>
+        <th>Recommended</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CPU</td>
+        <td>x86_64</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>RAM</td>
+        <td>512 MB</td>
+        <td>1 GB</td>
+      </tr>
+      <tr>
+        <td>Disk</td>
+        <td>200 MB</td>
+        <td>500 MB</td>
+      </tr>
+      <tr>
+        <td>NIC</td>
+        <td>1+ active interface</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Operating System Dependencies</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package / Component</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ubuntu Base</td>
+        <td>24.04 LTS</td>
+        <td>Supported OS version</td>
+      </tr>
+      <tr>
+        <td>systemd</td>
+        <td>&ge; 255</td>
+        <td>Service management</td>
+      </tr>
+      <tr>
+        <td>ca-certificates</td>
+        <td>2023.4.0</td>
+        <td>SSL verification for HTTPS</td>
+      </tr>
+      <tr>
+        <td>curl</td>
+        <td>7.88.1</td>
+        <td>Download / API access</td>
+      </tr>
+      <tr>
+        <td>gnupg</td>
+        <td>2.3.8</td>
+        <td>Package signature verification</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Node.js Runtime</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Node.js</td>
+        <td>v22.x</td>
+        <td>Runtime for Performa Satellite</td>
+      </tr>
+      <tr>
+        <td>npm</td>
+        <td>9.x</td>
+        <td>Node package management</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Performa Application</h3>
+  <ul>
+    <li>Performa Satellite binary (linux-x64)</li>
+    <li>Custom <code>config.json</code></li>
+    <li>Installed as background service via <code>satellite.bin --install</code></li>
+  </ul>
+
+  <h3>Network / Ports</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Requirement</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Outbound HTTPS</td>
+        <td>Access to central Performa server (port 443)</td>
+      </tr>
+      <tr>
+        <td>Firewall</td>
+        <td>Open for outbound connections</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Required Users &amp; Permissions</h3>
+  <ul>
+    <li>Runs under current user / cron (no dedicated user required)</li>
+    <li><code>config.json</code> must be readable only by owner (<code>chmod 600</code>)</li>
+  </ul>
+
+  <h3>Minimum Installation Commands</h3>
+  <pre><code>
+# Install base dependencies
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg nodejs npm
+
+# Optional: Verify Node.js version
+node -v
+npm -v
+
+# Install Performa Satellite (from package or binary)
+./install_performa.sh
+  </code></pre>
+
+  <h3>Explicitly Not Required</h3>
+  <ul>
+    <li>Hardware virtualization (Intel VT-x / AMD-V)</li>
+    <li>Python beyond base OS</li>
+    <li>Pacemaker / Corosync</li>
+    <li>Web UI stack (Wok / Kimchi / WeTTY)</li>
+  </ul>
+
+  <h3>Operational Notes</h3>
+  <ul>
+    <li>Performa is x86_64-only; ARM binaries are not provided.</li>
+    <li>Runs lightweight cron-based background process every minute.</li>
+    <li>Requires reliable outbound network to central server for monitoring.</li>
+    <li>Ensure Node.js runtime is properly installed prior to installation.</li>
+  </ul>
+</section>
+        <section id="wetty">
+            <h2>4. WeTTY Package <a href="https://butlerx.github.io/wetty/#/">(Doc)</a></h2>
+     <h3>Target Platform</h3>
+  <ul>
+    <li><strong>Operating System:</strong> Ubuntu 24.04 LTS</li>
+    <li><strong>Architecture:</strong> x86_64 or ARM64</li>
+    <li><strong>Init System:</strong> systemd</li>
+    <li><strong>Package Manager:</strong> apt (dpkg)</li>
+  </ul>
+
+  <h3>Hardware Requirements</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Requirement</th>
+        <th>Recommended</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CPU</td>
+        <td>x86_64 or ARM64</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>RAM</td>
+        <td>1 GB</td>
+        <td>2 GB</td>
+      </tr>
+      <tr>
+        <td>Disk</td>
+        <td>2 GB free</td>
+        <td>5 GB</td>
+      </tr>
+      <tr>
+        <td>NIC</td>
+        <td>1+ active interface</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Operating System Dependencies</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package / Component</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ubuntu Base</td>
+        <td>24.04 LTS</td>
+        <td>Supported OS version</td>
+      </tr>
+      <tr>
+        <td>systemd</td>
+        <td>&ge; 255</td>
+        <td>Service management</td>
+      </tr>
+      <tr>
+        <td>curl</td>
+        <td>7.88.1</td>
+        <td>Download / API access</td>
+      </tr>
+      <tr>
+        <td>git</td>
+        <td>2.41.0</td>
+        <td>Cloning WeTTY repository</td>
+      </tr>
+      <tr>
+        <td>build-essential</td>
+        <td>-</td>
+        <td>Compilation tools for Node.js modules</td>
+      </tr>
+      <tr>
+        <td>openssh-server</td>
+        <td>8.9p1</td>
+        <td>SSH backend for WeTTY</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Node.js Runtime</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Node.js</td>
+        <td>v22.x</td>
+        <td>Runtime for WeTTY</td>
+      </tr>
+      <tr>
+        <td>npm</td>
+        <td>9.x</td>
+        <td>Package management</td>
+      </tr>
+      <tr>
+        <td>pnpm (global)</td>
+        <td>8.x</td>
+        <td>Alternative package manager for Node.js modules</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Application</h3>
+  <ul>
+    <li>WeTTY source code cloned from GitHub fork</li>
+    <li>Built using <code>npm install</code> and <code>npm run build</code></li>
+    <li>Managed via <code>systemd</code> service <code>wetty.service</code></li>
+  </ul>
+
+  <h3>Network / Ports</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Requirement</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SSH Backend</td>
+        <td>Port 22/tcp (openssh-server)</td>
+      </tr>
+      <tr>
+        <td>WeTTY UI</td>
+        <td>Port 3000/tcp</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Required Users &amp; Permissions</h3>
+  <ul>
+    <li>Runs under the system user that has SSH access</li>
+    <li>Working directory must be readable and writable by service user</li>
+  </ul>
+
+  <h3>Minimum Installation Commands</h3>
+  <pre><code>
+# Update packages and install dependencies
+sudo apt update
+sudo apt install -y curl git build-essential openssh-server nodejs npm
+
+# Install pnpm globally
+npm install -g pnpm
+
+# Clone and build WeTTY
+git clone https://github.com/<forked-wetty-repo>.git /wetty_package/wetty
+cd /wetty_package/wetty
+pnpm install
+npm run build
+
+# Enable systemd service
+sudo systemctl enable wetty.service
+sudo systemctl start wetty.service
+  </code></pre>
+
+  <h3>Explicitly Not Required</h3>
+  <ul>
+    <li>Hardware virtualization (Intel VT-x / AMD-V)</li>
+    <li>Python runtime</li>
+    <li>Pacemaker / Corosync</li>
+    <li>Performa Satellite (optional, only if monitoring is needed)</li>
+  </ul>
+
+  <h3>Operational Notes</h3>
+  <ul>
+    <li>WeTTY provides browser-based access to SSH-enabled hosts.</li>
+    <li>Requires Node.js 22.x runtime.</li>
+    <li>Ensure the SSH server is running and accessible on port 22.</li>
+    <li>UI accessible at <code>http://&lt;IP_ADDRESS&gt;:3000/wetty</code></li>
+  </ul>
+</section>
+
+        <section id="virtualization">
+            <h2>5. Wok & Kimchi (Virtualization)<a href="https://github.com/kimchi-project/kimchi/blob/master/docs/README.md">(Doc)</a></h2>
+            <p>KVM virtualization management UI allowing users to manage virtual machines via a browser.</p>
+
+            <div class="warning">
+                <strong>Hardware virtualization is mandatory.</strong> Installation will fail without VT-x or AMD-V enabled in the BIOS.
+            </div>
+<h3>Target Platform</h3>
+  <ul>
+    <li><strong>Operating System:</strong> Ubuntu 24.04 LTS</li>
+    <li><strong>Architecture:</strong> x86_64 only</li>
+    <li><strong>Init System:</strong> systemd</li>
+    <li><strong>Package Manager:</strong> apt (dpkg)</li>
+    <li><strong>Hardware:</strong> Intel VT-x (vmx) or AMD-V (svm) required</li>
+  </ul>
+
+  <h3>Hardware Requirements</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Requirement</th>
+        <th>Recommended</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CPU</td>
+        <td>x86_64</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>CPU Virtualization</td>
+        <td>Intel VT-x / AMD-V</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>RAM</td>
+        <td>4 GB</td>
+        <td>8 GB</td>
+      </tr>
+      <tr>
+        <td>Disk</td>
+        <td>20 GB free</td>
+        <td>50 GB</td>
+      </tr>
+      <tr>
+        <td>NIC</td>
+        <td>1+ active interface</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Operating System Dependencies</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package / Component</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ubuntu Base</td>
+        <td>24.04 LTS</td>
+        <td>Supported OS</td>
+      </tr>
+      <tr>
+        <td>systemd</td>
+        <td>&ge; 255</td>
+        <td>Service management</td>
+      </tr>
+      <tr>
+        <td>libvirt-daemon-system</td>
+        <td>9.4.0</td>
+        <td>Libvirt virtualization daemon</td>
+      </tr>
+      <tr>
+        <td>libvirt-clients</td>
+        <td>9.4.0</td>
+        <td>Libvirt CLI tools</td>
+      </tr>
+      <tr>
+        <td>qemu-kvm</td>
+        <td>9.4</td>
+        <td>KVM virtualization</td>
+      </tr>
+      <tr>
+        <td>bridge-utils</td>
+        <td>1.8</td>
+        <td>Network bridging for VMs</td>
+      </tr>
+      <tr>
+        <td>virtinst</td>
+        <td>3.4</td>
+        <td>Virtual machine creation tools</td>
+      </tr>
+      <tr>
+        <td>cpu-checker</td>
+        <td>0.8</td>
+        <td>Hardware virtualization verification</td>
+      </tr>
+      <tr>
+        <td>nginx</td>
+        <td>1.24</td>
+        <td>Web server for Wok UI</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Python Runtime Dependencies</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Package</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>python3</td>
+        <td>3.12</td>
+        <td>Core runtime</td>
+      </tr>
+      <tr>
+        <td>python3-libvirt</td>
+        <td>9.4</td>
+        <td>Libvirt Python bindings</td>
+      </tr>
+      <tr>
+        <td>python3-cherrypy3</td>
+        <td>18.8.0</td>
+        <td>Web framework for Wok</td>
+      </tr>
+      <tr>
+        <td>python3-guestfs</td>
+        <td>1.44</td>
+        <td>VM filesystem inspection</td>
+      </tr>
+      <tr>
+        <td>python3-parted</td>
+        <td>3.4</td>
+        <td>Disk partition handling</td>
+      </tr>
+      <tr>
+        <td>python3-ldap</td>
+        <td>3.4.0</td>
+        <td>Directory services integration</td>
+      </tr>
+      <tr>
+        <td>python3-pam</td>
+        <td>0.11</td>
+        <td>Authentication support</td>
+      </tr>
+      <tr>
+        <td>python3-psutil</td>
+        <td>5.9.4</td>
+        <td>Process monitoring</td>
+      </tr>
+      <tr>
+        <td>python3-lxml</td>
+        <td>4.9.3</td>
+        <td>XML parsing</td>
+      </tr>
+      <tr>
+        <td>python3-openssl</td>
+        <td>23.0.0</td>
+        <td>Secure connections</td>
+      </tr>
+      <tr>
+        <td>python3-websockify</td>
+        <td>0.10.0</td>
+        <td>VM console websockets</td>
+      </tr>
+      <tr>
+        <td>python3-jsonschema</td>
+        <td>4.19</td>
+        <td>Configuration validation</td>
+      </tr>
+      <tr>
+        <td>python3-six</td>
+        <td>1.16.0</td>
+        <td>Python 2/3 compatibility</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Python Compatibility Patch</h3>
+  <ul>
+    <li>SafeConfigParser → ConfigParser (mandatory for Python 3.12)</li>
+  </ul>
+
+  <h3>Node.js Runtime (for Wok UI / Plugins)</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Component</th>
+        <th>Minimum Version</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Node.js</td>
+        <td>22.x</td>
+        <td>Build Wok web interface and plugins</td>
+      </tr>
+      <tr>
+        <td>npm</td>
+        <td>9.x</td>
+        <td>Package management</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Build Toolchain</h3>
+  <ul>
+    <li>gcc, make</li>
+    <li>autoconf, automake, libtool</li>
+    <li>pkg-config</li>
+    <li>gettext, autopoint</li>
+    <li>libxml2-dev, libxslt1-dev, libssl-dev</li>
+    <li>docbook-xsl, xsltproc</li>
+  </ul>
+
+  <h3>Application / Service</h3>
+  <ul>
+    <li>Wok service daemon: <code>wokd</code></li>
+    <li>Kimchi web plugin: accessible through Wok UI</li>
+    <li>Systemd services: enabled and started</li>
+    <li>Custom UI modifications applied for edge deployments</li>
+  </ul>
+
+  <h3>Network / Ports</h3>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Service</th>
+        <th>Port</th>
+        <th>Protocol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Wok Web UI</td>
+        <td>8001</td>
+        <td>HTTPS (self-signed)</td>
+      </tr>
+      <tr>
+        <td>Kimchi VM Console</td>
+        <td>6080</td>
+        <td>WebSocket</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Operational Notes</h3>
+  <ul>
+    <li>Requires hardware virtualization; installation will fail otherwise.</li>
+    <li>Python 3.12 is mandatory; compatibility patch must be applied.</li>
+    <li>Node.js 22.x required for building and running Wok plugins.</li>
+    <li>Ensure firewall allows ports 8001 (HTTPS) and 6080 (WebSocket).</li>
+  </ul>
+</section>        <section id="maintenance">
+            <h2>System Maintenance</h2>
+<pre><code># Service Status Checks
+systemctl status wetty
+systemctl status wokd
+systemctl status pcsd
+
+# Log Paths
+/var/log/performa/
+/var/log/wetty/
+/var/log/kimchi-wok/
+/var/log/pacemaker-node/</code></pre>
+        </section>
+
+        <div class="footer">
+            <strong>Generated:</strong> December 30, 2025<br>
+            ZEUS Edge Platform – Authoritative Technical Documentation
+        </div>
+    </main>
+
+</body>
+</html>
