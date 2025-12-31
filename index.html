@@ -285,56 +285,71 @@
 <section id="architecture">
     <h2>ZEUS Architecture Overview</h2>
 
-    <p>
-        The ZEUS Edge platform is built on a <strong>cluster-first, distributed architecture</strong> that clearly separates
-        execution, coordination, and presentation responsibilities. This design ensures high availability, fault tolerance,
-        and uninterrupted workload execution at the edge.
-    </p>
+    <ul>
+        <li>
+            <strong>Cluster-First Design:</strong>
+            ZEUS is built around an autonomous edge cluster where all critical operations such as compute, high availability,
+            monitoring, and virtualization run directly on the nodes.
+        </li>
 
-    <p>
-        At the top of the architecture is a <strong>web-based interface</strong> developed using React and Node.js. This layer
-        provides a unified dashboard for administrators to observe cluster health, manage virtual machines, access terminals,
-        and review performance metrics. The web interface is strictly a presentation layer and does not interact directly with
-        cluster nodes.
-    </p>
+        <li>
+            <strong>Web Interface (React + Node.js):</strong>
+            Provides a unified dashboard for administrators to view system status, manage resources, and initiate operations.
+            This layer is only responsible for presentation and user interaction.
+        </li>
 
-    <p>
-        Beneath the interface lies the <strong>Central Server (Central Node)</strong>, which functions as the control and
-        aggregation plane. It exposes APIs to the web interface, aggregates monitoring data, maintains metadata, and dispatches
-        management requests to the cluster. The central server does not execute workloads, host virtual machines, or participate
-        in high-availability decision-making.
-    </p>
+        <li>
+            <strong>Central Server (Control Plane):</strong>
+            Acts as an API gateway and coordination layer between the web interface and the cluster. It aggregates data,
+            maintains metadata, and forwards commands, but does not run workloads or virtual machines.
+        </li>
 
-    <p>
-        A dedicated <strong>database</strong> is connected to the central server for persisting historical metrics, cluster
-        topology, virtual machine metadata, and user/session information. This keeps cluster nodes largely stateless from a
-        management perspective and simplifies recovery.
-    </p>
+        <li>
+            <strong>Database:</strong>
+            Connected exclusively to the central server to store historical metrics, cluster information, virtual machine
+            metadata, and user/session data, keeping cluster nodes stateless from a management perspective.
+        </li>
 
-    <p>
-        The <strong>core services layer</strong> resides entirely within the cluster and represents the functional heart of
-        ZEUS. Remote access is provided by Wetty, enabling browser-based SSH access to nodes. Monitoring is handled by Performa,
-        where lightweight satellite agents collect system metrics on each node and forward them to the central server. Virtual
-        machine lifecycle management is performed using Wok and Kimchi, interfacing directly with KVM and Libvirt on each node.
-        High availability and failover are ensured through Corosync and Pacemaker, which manage cluster membership, quorum, and
-        resource placement.
-    </p>
+        <li>
+            <strong>Remote Access (Wetty):</strong>
+            Runs on cluster nodes and provides secure, browser-based SSH access. The central server only exposes access points
+            without handling shell execution.
+        </li>
 
-    <p>
-        At the lowest layer is the <strong>cluster execution environment</strong>, composed of multiple sub-nodes running
-        Ubuntu 24.04 LTS. Each node hosts virtualization services, monitoring agents, remote access components, and clustering
-        agents. These nodes collectively form an autonomous, self-healing cluster capable of continuing operations even if the
-        central server or web interface becomes unavailable.
-    </p>
+        <li>
+            <strong>Monitoring (Performa):</strong>
+            Lightweight Performa satellite agents run on each node to collect CPU, memory, disk, and network metrics and send
+            them to the central server for aggregation and visualization.
+        </li>
 
-    <p>
-        Overall, the ZEUS architecture ensures that <strong>all critical compute, availability, and monitoring intelligence
-        lives within the edge cluster</strong>, while the central server serves only to observe, coordinate, and present system
-        state—eliminating single points of failure and making ZEUS highly suitable for resilient edge deployments.
-    </p>
+        <li>
+            <strong>Virtual Machine Management (Wok &amp; Kimchi):</strong>
+            Enables web-based management of KVM virtual machines, storage pools, and networking. VM operations are executed
+            directly on the cluster nodes hosting the workloads.
+        </li>
+
+        <li>
+            <strong>High Availability Clustering (Corosync &amp; Pacemaker):</strong>
+            Provides node membership, quorum, resource management, and automated failover entirely within the cluster,
+            independent of the central server or web interface.
+        </li>
+
+        <li>
+            <strong>Cluster Execution Layer:</strong>
+            Consists of multiple Ubuntu 24.04 LTS sub-nodes. Each node runs virtualization, monitoring, remote access, and
+            clustering services, forming a self-healing and fault-tolerant environment.
+        </li>
+
+        <li>
+            <strong>Failure Isolation:</strong>
+            If the web interface or central server becomes unavailable, running virtual machines and cluster services continue
+            operating without interruption.
+        </li>
+    </ul>
 
     <!-- [Image of edge computing architecture diagram] -->
 </section>
+
 
         <section id="clusterlabs">
             <h2>2. ClusterLabs Installation <a href="https://clusterlabs.org/projects/pacemaker/doc/3.0/">(Doc)</a></h2><br>
@@ -1174,4 +1189,5 @@ systemctl status pcsd
 
 </body>
 </html>
+
 
