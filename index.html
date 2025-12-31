@@ -282,6 +282,59 @@
                 <li><strong>ClusterLabs:</strong> Cluster Management Solution</li>
             </ol>
         </section>
+<section id="architecture">
+    <h2>ZEUS Architecture Overview</h2>
+
+    <p>
+        The ZEUS Edge platform is built on a <strong>cluster-first, distributed architecture</strong> that clearly separates
+        execution, coordination, and presentation responsibilities. This design ensures high availability, fault tolerance,
+        and uninterrupted workload execution at the edge.
+    </p>
+
+    <p>
+        At the top of the architecture is a <strong>web-based interface</strong> developed using React and Node.js. This layer
+        provides a unified dashboard for administrators to observe cluster health, manage virtual machines, access terminals,
+        and review performance metrics. The web interface is strictly a presentation layer and does not interact directly with
+        cluster nodes.
+    </p>
+
+    <p>
+        Beneath the interface lies the <strong>Central Server (Central Node)</strong>, which functions as the control and
+        aggregation plane. It exposes APIs to the web interface, aggregates monitoring data, maintains metadata, and dispatches
+        management requests to the cluster. The central server does not execute workloads, host virtual machines, or participate
+        in high-availability decision-making.
+    </p>
+
+    <p>
+        A dedicated <strong>database</strong> is connected to the central server for persisting historical metrics, cluster
+        topology, virtual machine metadata, and user/session information. This keeps cluster nodes largely stateless from a
+        management perspective and simplifies recovery.
+    </p>
+
+    <p>
+        The <strong>core services layer</strong> resides entirely within the cluster and represents the functional heart of
+        ZEUS. Remote access is provided by Wetty, enabling browser-based SSH access to nodes. Monitoring is handled by Performa,
+        where lightweight satellite agents collect system metrics on each node and forward them to the central server. Virtual
+        machine lifecycle management is performed using Wok and Kimchi, interfacing directly with KVM and Libvirt on each node.
+        High availability and failover are ensured through Corosync and Pacemaker, which manage cluster membership, quorum, and
+        resource placement.
+    </p>
+
+    <p>
+        At the lowest layer is the <strong>cluster execution environment</strong>, composed of multiple sub-nodes running
+        Ubuntu 24.04 LTS. Each node hosts virtualization services, monitoring agents, remote access components, and clustering
+        agents. These nodes collectively form an autonomous, self-healing cluster capable of continuing operations even if the
+        central server or web interface becomes unavailable.
+    </p>
+
+    <p>
+        Overall, the ZEUS architecture ensures that <strong>all critical compute, availability, and monitoring intelligence
+        lives within the edge cluster</strong>, while the central server serves only to observe, coordinate, and present system
+        state—eliminating single points of failure and making ZEUS highly suitable for resilient edge deployments.
+    </p>
+
+    <!-- [Image of edge computing architecture diagram] -->
+</section>
 
         <section id="clusterlabs">
             <h2>2. ClusterLabs Installation <a href="https://clusterlabs.org/projects/pacemaker/doc/3.0/">(Doc)</a></h2><br>
@@ -1121,3 +1174,4 @@ systemctl status pcsd
 
 </body>
 </html>
+
